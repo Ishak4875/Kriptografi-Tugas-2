@@ -11,16 +11,15 @@ inputTextFileNamePath = path + "\\" + inputTextFileName
 outputTextFileNamePath = path + "\\" + outputTextFileName
 
 if(os.path.exists(inputTextFileNamePath) and os.path.exists(outputTextFileNamePath)):
-    inputTextFile = open(inputTextFileName,"r")
-    outputTextFile = open(outputTextFileName,"w")
-    inputText = inputTextFile.read()
-
     key = input("Masukkan Kunci Dekripsi : ")
-    S = KSAAlgorithm(key).permutation()
-    outputText = PRGAAlgorithm(S,inputText).convert()
-    outputTextFile.write(outputText)
+    
+    with open(inputTextFileName,"r",encoding="utf8") as inputTextFile:
+        S = KSAAlgorithm(key).permutation()
+        inputText = inputTextFile.read()
+        outputText = PRGAAlgorithm(S,inputText).convert()
 
-    inputTextFile.close()
-    outputTextFile.close()
+    with open(outputTextFileName,"w") as outputTextFile:
+        outputTextFile.write(outputText)
+
 else:
     print("Berkas File PlainText atau ChiperText Tidak Ditemukan")
